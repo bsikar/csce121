@@ -9,13 +9,7 @@ int sum(std::vector<int> v) {
   return sum;
 }
 
-int average(std::vector<int> v) {
-  int sum = 0;
-  for (int i = 0; i < v.size(); i++) {
-    sum += v[i];
-  }
-  return sum / v.size();
-}
+int average(std::vector<int> v) { return sum(v) / v.size(); }
 
 int main() {
   std::vector<int> v;
