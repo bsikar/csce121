@@ -52,6 +52,7 @@ bool is_increasing(int a, int b);
  * @return 'M', 'V', or 'N' depending on the type of the number.
  */
 char classify_mv_range_type(int number);
+
 /**
  * @brief Function to count the number of valid mountain and valley ranges
  * between a and b and return prints the count of mountain and valley ranges
