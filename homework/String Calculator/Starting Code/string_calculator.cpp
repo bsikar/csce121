@@ -5,18 +5,35 @@
 using std::cout, std::endl;
 using std::string;
 
+std::string add_extra_whitespace(const std::string &input) {
+  std::string output;
+  for (const char c : input) {
+    if (c == '+' || c == '*') {
+      output.push_back(' ');
+      output.push_back(c);
+      output.push_back(' ');
+    } else {
+      output.push_back(c);
+    }
+  }
+  return output;
+}
+
 std::string remove_extra_whitespace(const std::string &input) {
   std::istringstream iss(input);
   std::ostringstream oss;
   std::string token;
 
-  // Read each token from the input string and output it to the output stream
   while (iss >> token) {
     oss << token << " ";
   }
 
   // Return the modified string with extra whitespace removed
   return oss.str().substr(0, oss.str().size() - 1);
+}
+
+std::string clean_input(const std::string &input) {
+  return remove_extra_whitespace(add_extra_whitespace(input));
 }
 
 std::ostream &operator<<(std::ostream &os, const TokenType &e) {
@@ -32,6 +49,8 @@ std::ostream &operator<<(std::ostream &os, const TokenType &e) {
 }
 
 TokenType get_token_type(const string &s) {
+  // TODO: verify that a negative number works (it wont) e.g 12-1 would return
+  // true when it should be false
   bool is_neg = false;
 
   if (s.length() == 0) {
@@ -70,17 +89,13 @@ TokenType get_token_type(const string &s) {
 }
 
 // user is responsible for freeing the memory allocated for the array
-std::string *input_parser(std::string &input, int size) {
-  // Trim input for any whitespace
-  // input = add_extra_whitespace(input);
-  input = remove_extra_whitespace(input);
+std::string *input_parser(std::string &input) {
+  input = clean_input(input);
 
-  // Create a istringstream object from the input string
   std::istringstream iss(input);
   std::string token;
 
-  // Count the number of tokens in the input string
-  size = 0;
+  int size = 0;
   while (iss >> token) {
     ++size;
   }
@@ -89,14 +104,11 @@ std::string *input_parser(std::string &input, int size) {
     throw std::invalid_argument("invalid input");
   }
 
-  // Allocate memory for the array of tokens
   std::string *tokens = new std::string[size];
 
-  // Reset the istringstream object to the beginning of the string
   iss.clear();
   iss.seekg(0, std::ios::beg);
 
-  // Read each token from the istringstream object and store it in the array
   int operands = 0;
   int operators = 0;
   while (iss >> token) {
@@ -127,33 +139,53 @@ std::string *input_parser(std::string &input, int size) {
     throw std::invalid_argument("invalid input");
   }
 
-  // Return the dynamically allocated array of tokens
   return tokens;
 }
 
-string calculate(string *s) { return ""; }
+string calculate(const string *s) {
+  string opperator = s[0];
+  string operand1 = trim_leading_zeros(s[1]);
+  string operand2 = trim_leading_zeros(s[2]);
+  delete[] s;
+
+  if (opperator == "+") {
+    return add(operand1, operand2);
+  }
+
+  if (opperator == "*") {
+    return multiply(operand1, operand2);
+  }
+
+  throw std::invalid_argument("invalid operator");
+}
 
 unsigned int digit_to_decimal(char digit) {
-  // TODO(student): implement
-  return 0;
+  if (digit < '0' || digit > '9') {
+    throw std::invalid_argument("not a digit");
+  }
+
+  return digit - '0';
 }
 
 char decimal_to_digit(unsigned int decimal) {
-  // TODO(student): implement
-  return '\0';
+  if (decimal > 9) {
+    throw std::invalid_argument("not a decimal");
+  }
+
+  return decimal + '0';
 }
 
 string trim_leading_zeros(string num) {
-  // TODO(student): implement
+  // TODO
   return "";
 }
 
 string add(string lhs, string rhs) {
-  // TODO(student): implement
+  // TODO
   return "";
 }
 
 string multiply(string lhs, string rhs) {
-  // TODO(student): implement
+  // TODO
   return "";
 }

@@ -9,6 +9,30 @@
 enum class TokenType { OPERATOR, OPERAND };
 
 /*
+Returns a string with extra whitespace added between operators and operands and
+removed from the beginning and end of the string input: a string output: a
+cleaned string throws: none
+*/
+std::string clean_input(const std::string &input);
+
+/*
+Adds extra whitespace around operators so that they can be easily
+tokenized later.
+input: a string containing an expression
+output: a string with extra whitespace around operators
+throws: none
+*/
+std::string add_extra_whitespace(const std::string &);
+
+/*
+Removes extra whitespace from a string
+input: a string containing an expression
+output: a string with extra whitespace removed
+throws: none
+*/
+std::string remove_extra_whitespace(const std::string &);
+
+/*
 Overload the stream insertion operator to print a TokenType enum value
 input: an output stream and a TokenType enum value
 output: an output stream with the corresponding string representation of
@@ -34,14 +58,13 @@ throws: std::invalid_argument - if the string is not a valid expression
 
 user is responsible for freeing the memory allocated for the array
 */
-std::string *input_parser(const std::string &);
+std::string *input_parser(std::string &);
 
 /*
 calculate the result of an expression
 input: 2 operands and an operator as an array
 output: string - the result of the expression
 throws: std::invalid_argument - if the string is not a valid expression
-throws: none
 */
 std::string calculate(const std::string *);
 
