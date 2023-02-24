@@ -1,0 +1,31 @@
+main:8: Failure
+Expected equality of these values:
+ add("023482358374943","23423434")
+  Which is: 023482381798377
+ "23482381798377"
+  Which is: 23482381798377
+main:9: Failure
+Expected equality of these values:
+ add("3243243","0000324354254556")
+  Which is: 0000324357497799
+ "324357497799"
+  Which is: 324357497799
+main:10: Failure
+Expected equality of these values:
+ add("03413242343","343243")
+  Which is: 03413585586
+ "3413585586"
+  Which is: 3413585586
+main:11: Failure
+Expected equality of these values:
+ add("00000954354352","003545")
+  Which is: 00000954357897
+ "954357897"
+  Which is: 954357897
+main:12: Failure
+Expected equality of these values:
+ add("00023432454356434467897654","00000000044343273454")
+  Which is: 00023432454356478811171108
+ "23432454356478811171108"
+  Which is: 23432454356478811171108
+[FAIL] some test(s) failed in main

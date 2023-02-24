@@ -90,7 +90,7 @@ input: num - a string representing a number with zero or more leading 0s
 output: a copy of the input with all leading 0s removed
 throws: none
 */
-std::string trim_leading_zeros(std::string num);
+std::string trim_leading_zeros(const std::string &num);
 
 /*
 add two numbers
@@ -98,7 +98,7 @@ input: lhs,rhs - strings representing numbers, e.g. "1", "2"
 output: the result of adding rhs to lhs: lhs + rhs e.g. "3"
 throws: none.
 */
-std::string add(std::string lhs, std::string rhs);
+std::string add(const std::string &lhs, const std::string &rhs);
 
 /*
 muplity two numbers
@@ -106,6 +106,6 @@ input: lhs,rhs - strings representing numbers, e.g. "1", "2"
 output: the result of multiplying lhs by rhs: lhs * rhs, e.g. "2"
 throws:  none.
 */
-std::string multiply(std::string lhs, std::string rhs);
+std::string multiply(const std::string &lhs, const std::string &rhs);
 
 #endif // STRING_CALCULATOR_H

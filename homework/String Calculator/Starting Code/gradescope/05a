@@ -1,0 +1,127 @@
+main:8: Failure
+Expected equality of these values:
+ multiply("4","2")
+  Which is:
+ "8"
+  Which is: 8
+main:9: Failure
+Expected equality of these values:
+ multiply("6","7")
+  Which is:
+ "42"
+  Which is: 42
+main:10: Failure
+Expected equality of these values:
+ multiply("18","51")
+  Which is:
+ "918"
+  Which is: 918
+main:11: Failure
+Expected equality of these values:
+ multiply("2","73")
+  Which is:
+ "146"
+  Which is: 146
+main:12: Failure
+Expected equality of these values:
+ multiply("15","29")
+  Which is:
+ "435"
+  Which is: 435
+main:13: Failure
+Expected equality of these values:
+ multiply("138","3")
+  Which is:
+ "414"
+  Which is: 414
+main:14: Failure
+Expected equality of these values:
+ multiply("133","193")
+  Which is:
+ "25669"
+  Which is: 25669
+main:15: Failure
+Expected equality of these values:
+ multiply("175","170")
+  Which is:
+ "29750"
+  Which is: 29750
+main:16: Failure
+Expected equality of these values:
+ multiply("77","185")
+  Which is:
+ "14245"
+  Which is: 14245
+main:17: Failure
+Expected equality of these values:
+ multiply("267","310")
+  Which is:
+ "82770"
+  Which is: 82770
+main:18: Failure
+Expected equality of these values:
+ multiply("97","296")
+  Which is:
+ "28712"
+  Which is: 28712
+main:19: Failure
+Expected equality of these values:
+ multiply("426","135")
+  Which is:
+ "57510"
+  Which is: 57510
+main:20: Failure
+Expected equality of these values:
+ multiply("462","458")
+  Which is:
+ "211596"
+  Which is: 211596
+main:21: Failure
+Expected equality of these values:
+ multiply("340","473")
+  Which is:
+ "160820"
+  Which is: 160820
+main:22: Failure
+Expected equality of these values:
+ multiply("650","449")
+  Which is:
+ "291850"
+  Which is: 291850
+main:23: Failure
+Expected equality of these values:
+ multiply("201","701")
+  Which is:
+ "140901"
+  Which is: 140901
+main:24: Failure
+Expected equality of these values:
+ multiply("409","681")
+  Which is:
+ "278529"
+  Which is: 278529
+main:25: Failure
+Expected equality of these values:
+ multiply("436","10")
+  Which is:
+ "4360"
+  Which is: 4360
+main:26: Failure
+Expected equality of these values:
+ multiply("65","312")
+  Which is:
+ "20280"
+  Which is: 20280
+main:27: Failure
+Expected equality of these values:
+ multiply("826","148")
+  Which is:
+ "122248"
+  Which is: 122248
+main:28: Failure
+Expected equality of these values:
+ multiply("835","798")
+  Which is:
+ "666330"
+  Which is: 666330
+[FAIL] some test(s) failed in main

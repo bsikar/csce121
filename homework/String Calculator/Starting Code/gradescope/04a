@@ -1,0 +1,181 @@
+main:26: Failure
+Expected equality of these values:
+ add("1", "9")
+  Which is: 0
+ "10"
+  Which is: 10
+main:33: Failure
+Expected equality of these values:
+ add("2", "8")
+  Which is: 0
+ "10"
+  Which is: 10
+main:34: Failure
+Expected equality of these values:
+ add("2", "9")
+  Which is: 1
+ "11"
+  Which is: 11
+main:39: Failure
+Expected equality of these values:
+ add("3", "7")
+  Which is: 0
+ "10"
+  Which is: 10
+main:40: Failure
+Expected equality of these values:
+ add("3", "8")
+  Which is: 1
+ "11"
+  Which is: 11
+main:41: Failure
+Expected equality of these values:
+ add("3", "9")
+  Which is: 2
+ "12"
+  Which is: 12
+main:44: Failure
+Expected equality of these values:
+ add("4", "6")
+  Which is: 0
+ "10"
+  Which is: 10
+main:45: Failure
+Expected equality of these values:
+ add("4", "7")
+  Which is: 1
+ "11"
+  Which is: 11
+main:46: Failure
+Expected equality of these values:
+ add("4", "8")
+  Which is: 2
+ "12"
+  Which is: 12
+main:47: Failure
+Expected equality of these values:
+ add("4", "9")
+  Which is: 3
+ "13"
+  Which is: 13
+main:48: Failure
+Expected equality of these values:
+ add("5", "5")
+  Which is: 0
+ "10"
+  Which is: 10
+main:49: Failure
+Expected equality of these values:
+ add("5", "6")
+  Which is: 1
+ "11"
+  Which is: 11
+main:50: Failure
+Expected equality of these values:
+ add("5", "7")
+  Which is: 2
+ "12"
+  Which is: 12
+main:51: Failure
+Expected equality of these values:
+ add("5", "8")
+  Which is: 3
+ "13"
+  Which is: 13
+main:52: Failure
+Expected equality of these values:
+ add("5", "9")
+  Which is: 4
+ "14"
+  Which is: 14
+main:53: Failure
+Expected equality of these values:
+ add("6", "6")
+  Which is: 2
+ "12"
+  Which is: 12
+main:54: Failure
+Expected equality of these values:
+ add("6", "7")
+  Which is: 3
+ "13"
+  Which is: 13
+main:55: Failure
+Expected equality of these values:
+ add("6", "8")
+  Which is: 4
+ "14"
+  Which is: 14
+main:56: Failure
+Expected equality of these values:
+ add("6", "9")
+  Which is: 5
+ "15"
+  Which is: 15
+main:57: Failure
+Expected equality of these values:
+ add("7", "7")
+  Which is: 4
+ "14"
+  Which is: 14
+main:58: Failure
+Expected equality of these values:
+ add("7", "8")
+  Which is: 5
+ "15"
+  Which is: 15
+main:59: Failure
+Expected equality of these values:
+ add("7", "9")
+  Which is: 6
+ "16"
+  Which is: 16
+main:60: Failure
+Expected equality of these values:
+ add("8", "8")
+  Which is: 6
+ "16"
+  Which is: 16
+main:61: Failure
+Expected equality of these values:
+ add("8", "9")
+  Which is: 7
+ "17"
+  Which is: 17
+main:62: Failure
+Expected equality of these values:
+ add("9", "9")
+  Which is: 8
+ "18"
+  Which is: 18
+main:63: Failure
+Expected equality of these values:
+ add("99", "1")
+  Which is: 00
+ "100"
+  Which is: 100
+main:64: Failure
+Expected equality of these values:
+ add("1", "999")
+  Which is: 000
+ "1000"
+  Which is: 1000
+main:67: Failure
+Expected equality of these values:
+ add("7654", "2346")
+  Which is: 0000
+ "10000"
+  Which is: 10000
+main:68: Failure
+Expected equality of these values:
+ add("56678", "66778")
+  Which is: 23456
+ "123456"
+  Which is: 123456
+main:69: Failure
+Expected equality of these values:
+ add("1234567890", "9876543210")
+  Which is: 1111111100
+ "11111111100"
+  Which is: 11111111100
+[FAIL] some test(s) failed in main

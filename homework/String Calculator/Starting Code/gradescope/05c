@@ -1,0 +1,37 @@
+main:8: Failure
+Expected equality of these values:
+ multiply("068742343","996854")
+  Which is:
+ "68526079588922"
+  Which is: 68526079588922
+main:9: Failure
+Expected equality of these values:
+ multiply("12344","000000057683583")
+  Which is:
+ "712046148552"
+  Which is: 712046148552
+main:10: Failure
+Expected equality of these values:
+ multiply("0024443","8988")
+  Which is:
+ "219693684"
+  Which is: 219693684
+main:11: Failure
+Expected equality of these values:
+ multiply("000003434","0765865")
+  Which is:
+ "2629980410"
+  Which is: 2629980410
+main:12: Failure
+Expected equality of these values:
+ multiply("386894","00034343")
+  Which is:
+ "13287100642"
+  Which is: 13287100642
+main:13: Failure
+Expected equality of these values:
+ multiply("000068745345","00000001")
+  Which is:
+ "68745345"
+  Which is: 68745345
+[FAIL] some test(s) failed in main

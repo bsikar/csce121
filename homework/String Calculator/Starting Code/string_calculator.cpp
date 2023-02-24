@@ -130,13 +130,13 @@ std::string *input_parser(std::string &input) {
     } catch (const std::exception &e) {
       std::cerr << e.what() << '\n';
       delete[] tokens;
-      throw std::invalid_argument("invalid input");
+      throw std::invalid_argument("Invalid LHS");
     }
   }
 
   if (operands != 2 || operators != 1) {
     delete[] tokens;
-    throw std::invalid_argument("invalid input");
+    throw std::invalid_argument("Invalide RHS");
   }
 
   return tokens;
@@ -175,17 +175,68 @@ char decimal_to_digit(unsigned int decimal) {
   return decimal + '0';
 }
 
-string trim_leading_zeros(string num) {
-  // TODO
-  return "";
+string trim_leading_zeros(const string &num) {
+  if (num.length() == 0) {
+    return num;
+  }
+
+  unsigned int i = 0;
+  while (num[i] == '0') {
+    ++i;
+  }
+
+  if (i == num.length()) {
+    return "0";
+  }
+
+  return num.substr(i, num.length() - i);
 }
 
-string add(string lhs, string rhs) {
-  // TODO
-  return "";
+// string subtract(const string &lhs, const string &rhs) {}
+
+string add(const string &lhs, const string &rhs) {
+  if (lhs[0] == '-' && rhs[0] == '-') {
+    return "-" + add(lhs.substr(1, lhs.length() - 1),
+                     rhs.substr(1, rhs.length() - 1));
+  }
+
+  if (lhs[0] == '-' && rhs[0] != '-') {
+    // return subtract(rhs, lhs.substr(1, lhs.length() - 1));
+  }
+
+  if (lhs[0] != '-' && rhs[0] == '-') {
+    // return subtract(lhs, rhs.substr(1, rhs.length() - 1));
+  }
+
+  string result = "";
+  int carry = 0;
+
+  int i = lhs.length() - 1;
+  int j = rhs.length() - 1;
+
+  while (i >= 0 || j >= 0) {
+    int val = carry;
+
+    if (i >= 0) {
+      val += digit_to_decimal(lhs[i]);
+      i -= 1;
+    }
+
+    if (j >= 0) {
+      val += digit_to_decimal(rhs[j]);
+      j -= 1;
+    }
+
+    carry = val / 10;
+    val = val % 10;
+
+    result = decimal_to_digit(val) + result;
+  }
+
+  return result;
 }
 
-string multiply(string lhs, string rhs) {
+string multiply(const string &lhs, const string &rhs) {
   // TODO
   return "";
 }
