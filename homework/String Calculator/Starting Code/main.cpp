@@ -15,9 +15,15 @@ int main() {
   while (true) {
     cout << ">> ";
     string input;
+
     if (!getline(cin, input) || input == "q" || input == "quit") {
       break;
     }
+
+    if (input.empty()) {
+      continue;
+    }
+
     try {
       // if input contains 'ans', replace it with the previous answer (if any)
       if (input.find("ans") != string::npos) {
