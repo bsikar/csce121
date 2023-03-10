@@ -42,41 +42,46 @@ void loadImage(string filename, Pixel image[][MAX_HEIGHT], unsigned int &width,
     throw std::runtime_error("Failed to open " + filename);
   }
 
-  // Read in the PPM header information
+  // read in the PPM header information
   string line;
   int maxColorValue;
   input_file >> line >> width >> height >> maxColorValue;
 
-  // Validate the header information
+  // validate the header information
   if (line != "P3" && line != "p3") {
     throw std::runtime_error("Invalid type " + line);
   }
   if (width <= 0 || height <= 0 || width > MAX_WIDTH || height > MAX_HEIGHT) {
     throw std::runtime_error("Invalid dimensions");
   }
-  if (maxColorValue != 255) {
+  if (maxColorValue != MAX_RGB_VALUE) {
     throw std::runtime_error("Invalid color value");
   }
 
-  // Read in the pixel values
-  int red, green, blue;
+  // read in the pixel values
+  int rgb[3];
   for (unsigned int j = 0; j < height; j++) {
     for (unsigned int i = 0; i < width; i++) {
-      if (!(input_file >> red >> green >> blue)) {
+      // check valid input
+      if (!(input_file >> rgb[0] >> rgb[1] >> rgb[2])) {
         throw std::runtime_error("Invalid color value");
       }
-      if (red < 0 || red > 255 || green < 0 || green > 255 || blue < 0 ||
-          blue > 255) {
-        throw std::runtime_error("Invalid color value");
+
+      // check the bounds
+      for (int k = 0; k < 3; k++) {
+        if (rgb[k] < 0 || rgb[k] > MAX_RGB_VALUE) {
+          throw std::runtime_error("Invalid color value");
+        }
       }
-      image[i][j].r = red;
-      image[i][j].g = green;
-      image[i][j].b = blue;
+      // set values
+      image[i][j].r = rgb[0];
+      image[i][j].g = rgb[1];
+      image[i][j].b = rgb[2];
     }
   }
 
-  // Check if there are too many pixel values
-  if (input_file >> red) {
+  // check if there are too many pixel values
+  if (input_file >> rgb[0]) {
     throw std::runtime_error("Too many values");
   }
 
@@ -86,12 +91,163 @@ void loadImage(string filename, Pixel image[][MAX_HEIGHT], unsigned int &width,
 }
 
 void outputImage(string filename, Pixel image[][MAX_HEIGHT], unsigned int width,
-                 unsigned int height) {}
+                 unsigned int height) {
+  std::ofstream output_file(filename);
+
+  // check for error
+  if (!output_file) {
+    throw std::runtime_error("Failed to open " + filename);
+  }
+
+  // add header
+  output_file << "P3" << endl;
+
+  // add dimensions
+  output_file << width << " " << height << endl;
+
+  // add max rgb value
+  output_file << MAX_RGB_VALUE << endl;
+
+  // write to a file
+  for (unsigned int i = 0; i < width; i++) {
+    for (unsigned int j = 0; j < height; j++) {
+      output_file << image[i][j].r << " " << image[i][j].g << " "
+                  << image[i][j].b << " ";
+    }
+    output_file << endl;
+  }
+
+  output_file.close();
+}
 
 unsigned int energy(Pixel image[][MAX_HEIGHT], unsigned int x, unsigned int y,
                     unsigned int width, unsigned int height) {
-  // TODO: implement (part 1)
-  return 0;
+
+  // loop through every pixel
+  Pixel p_left, p_right, p_top, p_bottom;
+  int x_l, x_r, x_t, x_b;
+  int y_l, y_r, y_t, y_b;
+  // There are 5 cases, TL, TR, BL, BR, R
+
+  // TL
+  if (x == 0 && y == 0) {
+    cout << "CASE TL" << endl;
+    x_l = width - 1;
+    x_r = x + 1;
+    x_t = x;
+    x_b = x;
+
+    y_l = y;
+    y_r = y;
+    y_b = y + 1;
+    y_t = height - 1;
+  }
+
+  // TR
+  else if (x == 0 && y == height - 1) {
+    cout << "CASE TR" << endl;
+    x_l = x - 1;
+    x_r = 0;
+    x_t = x;
+    x_b = x;
+
+    y_l = y;
+    y_r = y;
+    y_t = height - 1;
+    y_b = y + 1;
+  }
+
+  // BL
+  else if (x == 0 && y == height - 1) {
+    cout << "CASE BL" << endl;
+    x_l = width - 1;
+    x_r = x + 1;
+    x_t = x;
+    x_b = x;
+
+    y_l = y;
+    y_r = y;
+    y_t = y - 1;
+    y_b = 0;
+  }
+
+  // BR
+  else if (x == width - 1 && y == height - 1) {
+    cout << "CASE BR" << endl;
+    x_l = x - 1;
+    x_r = 0;
+    x_t = x;
+    x_b = x;
+
+    y_l = y;
+    y_r = y;
+    y_t = y - 1;
+    y_b = 0;
+  }
+
+  // R
+  else {
+    cout << "CASE R" << endl;
+    cout << "(starting): ( " << x << ", " << y << " )" << endl;
+    x_l = x - 1;
+    x_r = x + 1;
+    x_t = x;
+    x_b = x;
+
+    y_l = y;
+    y_r = y;
+    y_t = y - 1;
+    y_b = y + 1;
+    cout << "(left): ( " << x_l << ", " << y_l << " )" << endl;
+    cout << "(right): ( " << x_r << ", " << y_r << " )" << endl;
+    cout << "(top): ( " << x_t << ", " << y_t << " )" << endl;
+    cout << "(bottom): ( " << x_b << ", " << y_b << " )" << endl;
+
+    printImage(image, width, height);
+  }
+
+  //  p_left = image[y_l][x_l];
+  //  p_right = image[y_r][x_r];
+  //  p_top = image[y_t][x_t];
+  //  p_bottom = image[y_b][x_b];
+  //
+  p_left = image[x_l][y_l];
+  p_right = image[x_r][y_r];
+  p_top = image[x_t][y_t];
+  p_bottom = image[x_b][y_b];
+
+  // find the energy of the left, right pixels
+  int deltas[3];
+
+  cout << endl << endl;
+  deltas[0] = p_right.r - p_left.r;
+
+  cout << "Rx(" << x << ", " << y << ") = " << p_right.r << " - " << p_left.r
+       << " = " << deltas[0] << endl;
+
+  deltas[1] = p_right.g - p_left.g;
+
+  cout << "Gx(" << x << ", " << y << ") = " << p_right.g << " - " << p_left.g
+       << " = " << deltas[1] << endl;
+
+  deltas[2] = p_right.b - p_left.b;
+  cout << "Bx(" << x << ", " << y << ") = " << p_right.g << " - " << p_left.b
+       << " = " << deltas[2] << endl;
+
+  int energies[2];
+
+  energies[0] = (deltas[0] * deltas[0]) + (deltas[1] * deltas[1]) +
+                (deltas[2] * deltas[2]);
+
+  // find the energy of the top and bottom pixels
+  deltas[0] = p_bottom.r - p_top.r;
+  deltas[1] = p_bottom.g - p_top.g;
+  deltas[2] = p_bottom.b - p_top.b;
+
+  energies[1] = (deltas[0] * deltas[0]) + (deltas[1] * deltas[1]) +
+                (deltas[2] * deltas[2]);
+
+  return energies[0] + energies[1];
 }
 
 // uncomment functions as you implement them (part 2)
