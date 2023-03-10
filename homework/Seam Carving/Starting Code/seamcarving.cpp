@@ -40,9 +40,13 @@ int main() {
   cout << "Input target height: ";
   cin >> targetHeight;
 
-  // TODO: add code to validate input (part 1)
   // Exit program with error if there are problems with
   //   targetWidth or targetHeight
+  if (targetWidth > static_cast<int>(width) ||
+      targetHeight > static_cast<int>(height)) {
+    cout << "Invalid target dimensions" << endl;
+    return 1;
+  }
 
   cout << "Start carving..." << endl;
 

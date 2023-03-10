@@ -4,7 +4,6 @@
 #include <iostream>
 #include <sstream>
 
-using std::cout;
 using std::endl;
 using std::string;
 
@@ -16,21 +15,6 @@ void initializeImage(Pixel image[][MAX_HEIGHT]) {
       // initialize pixel
       image[col][row] = {0, 0, 0};
     }
-  }
-}
-
-void printImage(const Pixel image[][MAX_HEIGHT], unsigned int width,
-                unsigned int height) {
-  for (unsigned int row_index = 0; row_index < height; row_index++) {
-    for (unsigned int col_index = 0; col_index < width; col_index++) {
-      cout << "{" << image[col_index][row_index].r << ", "
-           << image[col_index][row_index].g << ", "
-           << image[col_index][row_index].b << "}";
-      if (col_index < width - 1) {
-        cout << ", ";
-      }
-    }
-    cout << endl;
   }
 }
 
@@ -85,8 +69,6 @@ void loadImage(string filename, Pixel image[][MAX_HEIGHT], unsigned int &width,
     throw std::runtime_error("Too many values");
   }
 
-  printImage(image, width, height);
-
   input_file.close();
 }
 
@@ -109,8 +91,8 @@ void outputImage(string filename, Pixel image[][MAX_HEIGHT], unsigned int width,
   output_file << MAX_RGB_VALUE << endl;
 
   // write to a file
-  for (unsigned int i = 0; i < width; i++) {
-    for (unsigned int j = 0; j < height; j++) {
+  for (unsigned int j = 0; j < height; j++) {
+    for (unsigned int i = 0; i < width; i++) {
       output_file << image[i][j].r << " " << image[i][j].g << " "
                   << image[i][j].b << " ";
     }
@@ -123,143 +105,65 @@ void outputImage(string filename, Pixel image[][MAX_HEIGHT], unsigned int width,
 unsigned int energy(Pixel image[][MAX_HEIGHT], unsigned int x, unsigned int y,
                     unsigned int width, unsigned int height) {
 
-  // loop through every pixel
-  Pixel p_left, p_right, p_top, p_bottom;
-  int x_l, x_r, x_t, x_b;
-  int y_l, y_r, y_t, y_b;
-  // There are 5 cases, TL, TR, BL, BR, R
+  int up[2], down[2], left[2], right[2];
 
-  // TL
-  if (x == 0 && y == 0) {
-    cout << "CASE TL" << endl;
-    x_l = width - 1;
-    x_r = x + 1;
-    x_t = x;
-    x_b = x;
-
-    y_l = y;
-    y_r = y;
-    y_b = y + 1;
-    y_t = height - 1;
+  if (x == 0) {
+    up[0] = width - 1;
+    up[1] = y;
+  } else {
+    up[0] = x - 1;
+    up[1] = y;
   }
 
-  // TR
-  else if (x == 0 && y == height - 1) {
-    cout << "CASE TR" << endl;
-    x_l = x - 1;
-    x_r = 0;
-    x_t = x;
-    x_b = x;
-
-    y_l = y;
-    y_r = y;
-    y_t = height - 1;
-    y_b = y + 1;
+  if (x == width - 1) {
+    down[0] = 0;
+    down[1] = y;
+  } else {
+    down[0] = x + 1;
+    down[1] = y;
   }
 
-  // BL
-  else if (x == 0 && y == height - 1) {
-    cout << "CASE BL" << endl;
-    x_l = width - 1;
-    x_r = x + 1;
-    x_t = x;
-    x_b = x;
-
-    y_l = y;
-    y_r = y;
-    y_t = y - 1;
-    y_b = 0;
+  if (y == 0) {
+    left[0] = x;
+    left[1] = height - 1;
+  } else {
+    left[0] = x;
+    left[1] = y - 1;
   }
 
-  // BR
-  else if (x == width - 1 && y == height - 1) {
-    cout << "CASE BR" << endl;
-    x_l = x - 1;
-    x_r = 0;
-    x_t = x;
-    x_b = x;
-
-    y_l = y;
-    y_r = y;
-    y_t = y - 1;
-    y_b = 0;
+  if (y == height - 1) {
+    right[0] = x;
+    right[1] = 0;
+  } else {
+    right[0] = x;
+    right[1] = y + 1;
   }
 
-  // R
-  else {
-    cout << "CASE R" << endl;
-    cout << "(starting): ( " << x << ", " << y << " )" << endl;
-    x_l = x - 1;
-    x_r = x + 1;
-    x_t = x;
-    x_b = x;
+  int red = image[up[0]][up[1]].r - image[down[0]][down[1]].r;
+  int green = image[up[0]][up[1]].g - image[down[0]][down[1]].g;
+  int blue = image[up[0]][up[1]].b - image[down[0]][down[1]].b;
 
-    y_l = y;
-    y_r = y;
-    y_t = y - 1;
-    y_b = y + 1;
-    cout << "(left): ( " << x_l << ", " << y_l << " )" << endl;
-    cout << "(right): ( " << x_r << ", " << y_r << " )" << endl;
-    cout << "(top): ( " << x_t << ", " << y_t << " )" << endl;
-    cout << "(bottom): ( " << x_b << ", " << y_b << " )" << endl;
+  int red2 = image[left[0]][left[1]].r - image[right[0]][right[1]].r;
+  int green2 = image[left[0]][left[1]].g - image[right[0]][right[1]].g;
+  int blue2 = image[left[0]][left[1]].b - image[right[0]][right[1]].b;
 
-    printImage(image, width, height);
-  }
+  int energy = (red * red) + (green * green) + (blue * blue) + (red2 * red2) +
+               (green2 * green2) + (blue2 * blue2);
 
-  //  p_left = image[y_l][x_l];
-  //  p_right = image[y_r][x_r];
-  //  p_top = image[y_t][x_t];
-  //  p_bottom = image[y_b][x_b];
-  //
-  p_left = image[x_l][y_l];
-  p_right = image[x_r][y_r];
-  p_top = image[x_t][y_t];
-  p_bottom = image[x_b][y_b];
-
-  // find the energy of the left, right pixels
-  int deltas[3];
-
-  cout << endl << endl;
-  deltas[0] = p_right.r - p_left.r;
-
-  cout << "Rx(" << x << ", " << y << ") = " << p_right.r << " - " << p_left.r
-       << " = " << deltas[0] << endl;
-
-  deltas[1] = p_right.g - p_left.g;
-
-  cout << "Gx(" << x << ", " << y << ") = " << p_right.g << " - " << p_left.g
-       << " = " << deltas[1] << endl;
-
-  deltas[2] = p_right.b - p_left.b;
-  cout << "Bx(" << x << ", " << y << ") = " << p_right.g << " - " << p_left.b
-       << " = " << deltas[2] << endl;
-
-  int energies[2];
-
-  energies[0] = (deltas[0] * deltas[0]) + (deltas[1] * deltas[1]) +
-                (deltas[2] * deltas[2]);
-
-  // find the energy of the top and bottom pixels
-  deltas[0] = p_bottom.r - p_top.r;
-  deltas[1] = p_bottom.g - p_top.g;
-  deltas[2] = p_bottom.b - p_top.b;
-
-  energies[1] = (deltas[0] * deltas[0]) + (deltas[1] * deltas[1]) +
-                (deltas[2] * deltas[2]);
-
-  return energies[0] + energies[1];
+  return energy;
 }
-
 // uncomment functions as you implement them (part 2)
 
 // unsigned int loadVerticalSeam(Pixel image[][MAX_HEIGHT], unsigned int
-// start_col, unsigned int width, unsigned int height, unsigned int seam[]) {
+// start_col, unsigned int width, unsigned int height, unsigned int seam[])
+// {
 //   // TODO: implement (part 2)
 //   return 0;
 // }
 
 // unsigned int loadHorizontalSeam(Pixel image[][MAX_HEIGHT], unsigned int
-// start_row, unsigned int width, unsigned int height, unsigned int seam[]) {
+// start_row, unsigned int width, unsigned int height, unsigned int seam[])
+// {
 //   // TODO: implement (part 2)
 //   return 0;
 // }
