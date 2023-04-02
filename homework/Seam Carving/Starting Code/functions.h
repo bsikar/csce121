@@ -4,6 +4,9 @@
 #include <iostream>
 #include <string>
 
+using uint = unsigned int;
+using ushort = unsigned short;
+
 // struct for Pixel (short is a 2 byte signed integer)
 struct Pixel {
   short r; // red
@@ -12,33 +15,37 @@ struct Pixel {
 };
 
 // maximum image dimensions (do not change)
-const unsigned int MAX_WIDTH = 1920;
-const unsigned int MAX_HEIGHT = 1080;
+const uint MAX_WIDTH = 1920;
+const uint MAX_HEIGHT = 1080;
 
-const unsigned short MAX_RGB_VALUE = 255;
+const ushort MAX_RGB_VALUE = 255;
 
 // already implemented
 void initializeImage(Pixel image[][MAX_HEIGHT]);
 
-void loadImage(std::string filename, Pixel image[][MAX_HEIGHT],
-               unsigned int &width, unsigned int &height);
+void loadImage(std::string filename, Pixel image[][MAX_HEIGHT], uint &width,
+               uint &height);
 
-void outputImage(std::string filename, Pixel image[][MAX_HEIGHT],
-                 unsigned int width, unsigned int height);
-unsigned int energy(Pixel image[][MAX_HEIGHT], unsigned int x, unsigned int y,
-                    unsigned int width, unsigned int height);
+void outputImage(std::string filename, Pixel image[][MAX_HEIGHT], uint width,
+                 uint height);
+uint energy(Pixel image[][MAX_HEIGHT], uint x, uint y, uint width, uint height);
 
-// TODO: uncomment and implement (part 2)
-// unsigned int loadVerticalSeam(Pixel image[][MAX_HEIGHT], unsigned int
-// start_col, unsigned int width, unsigned int height, unsigned int seam[]);
-// unsigned int loadHorizontalSeam(Pixel image[][MAX_HEIGHT], unsigned int
-// start_row, unsigned int width, unsigned int height, unsigned int seam[]);
-// void findMinVerticalSeam(Pixel image[][MAX_HEIGHT], unsigned int width,
-// unsigned int height, unsigned int seam[]); void findMinHorizontalSeam(Pixel
-// image[][MAX_HEIGHT], unsigned int width, unsigned int height, unsigned int
-// seam[]); void removeVerticalSeam(Pixel image[][MAX_HEIGHT], unsigned int&
-// width, unsigned int height, unsigned int verticalSeam[]); void
-// removeHorizontalSeam(Pixel image[][MAX_HEIGHT], unsigned int width, unsigned
-// int& height, unsigned int horizontalSeam[]);
+uint loadVerticalSeam(Pixel image[][MAX_HEIGHT], uint start_col, uint width,
+                      uint height, uint seam[]);
+
+uint loadHorizontalSeam(Pixel image[][MAX_HEIGHT], uint start_row, uint width,
+                        uint height, uint seam[]);
+
+void findMinVerticalSeam(Pixel image[][MAX_HEIGHT], uint width, uint height,
+                         uint seam[]);
+
+void findMinHorizontalSeam(Pixel image[][MAX_HEIGHT], uint width, uint height,
+                           uint seam[]);
+
+void removeVerticalSeam(Pixel image[][MAX_HEIGHT], uint &width, uint height,
+                        uint verticalSeam[]);
+
+void removeHorizontalSeam(Pixel image[][MAX_HEIGHT], uint width,
+                          unsigned int &height, uint horizontalSeam[]);
 
 #endif

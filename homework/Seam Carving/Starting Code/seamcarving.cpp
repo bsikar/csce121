@@ -15,8 +15,8 @@ int main() {
 
   // declare variables
   string filename;
-  unsigned int width = 0;
-  unsigned int height = 0;
+  uint width = 0;
+  uint height = 0;
   int targetWidth = 0;
   int targetHeight = 0;
 
@@ -50,28 +50,21 @@ int main() {
 
   cout << "Start carving..." << endl;
 
-  // TODO: uncomment functions in the following while loop
-  //       as you implement (part 2)
-
-  // while ((width - targetWidth > 0) || (height - targetHeight > 0)) {
-  //   // find and remove a vertical seam
-  //   if (width - targetWidth > 0) {
-  //     unsigned int verticalSeam[MAX_HEIGHT];
-  //     //findMinVerticalSeam(image, width, height, verticalSeam); // uncomment
-  //     when ready to use (part2)
-  //     //removeVerticalSeam(image, width, height, verticalSeam); // uncomment
-  //     when ready to use (part 2)
-  //   }
-  //   // this is for the extra credit
-  //   // find and remove a horizontal seam
-  //   if (height - targetHeight > 0) {
-  //     unsigned int horizontalSeam[MAX_WIDTH];
-  //     //findMinHorizontalSeam(image, width, height, horizontalSeam); //
-  //     uncomment when ready to use (part 2 extra credit)
-  //     //removeHorizontalSeam(image, width, height, horizontalSeam); //
-  //     uncomment when ready to use (part 2 extra credit)
-  //   }
-  // }
+  while ((width - targetWidth > 0) || (height - targetHeight > 0)) {
+    // find and remove a vertical seam
+    if (width - targetWidth > 0) {
+      uint verticalSeam[MAX_HEIGHT];
+      findMinVerticalSeam(image, width, height, verticalSeam);
+      removeVerticalSeam(image, width, height, verticalSeam);
+    }
+    // this is for the extra credit
+    // find and remove a horizontal seam
+    if (height - targetHeight > 0) {
+      uint horizontalSeam[MAX_WIDTH];
+      findMinHorizontalSeam(image, width, height, horizontalSeam);
+      removeHorizontalSeam(image, width, height, horizontalSeam);
+    }
+  }
 
   try {
     // attempt to output image
