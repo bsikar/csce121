@@ -62,6 +62,7 @@ void SingleLinkedList::clear() {
     curr = next;
   }
   head = nullptr;
+  tail = nullptr;
 }
 
 int SingleLinkedList::find(int value) const {

@@ -63,6 +63,7 @@ void DoubleLinkedList::clear() {
     curr = next;
   }
   head = nullptr;
+  tail = nullptr;
 }
 
 int DoubleLinkedList::find(int value) const {
