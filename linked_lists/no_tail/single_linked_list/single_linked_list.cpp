@@ -135,7 +135,23 @@ int SingleLinkedList::insert(int index, int value) {
   return index;
 }
 
-void SingleLinkedList::sort() {}
+void SingleLinkedList::sort() {
+  Node *curr = head;
+  Node *next = nullptr;
+
+  while (curr != nullptr) {
+    next = curr->next;
+    while (next != nullptr) {
+      if (curr->data > next->data) {
+        int temp = curr->data;
+        curr->data = next->data;
+        next->data = temp;
+      }
+      next = next->next;
+    }
+    curr = curr->next;
+  }
+}
 
 std::ostream &operator<<(std::ostream &os, const SingleLinkedList &list) {
   os << list.print();
