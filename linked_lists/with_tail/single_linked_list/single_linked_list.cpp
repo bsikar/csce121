@@ -1,17 +1,18 @@
 #include "single_linked_list.h"
 #include <iostream>
 
-SingleLinkedList::SingleLinkedList() : head(nullptr), size(0) {}
+SingleLinkedList::SingleLinkedList() : head(nullptr), tail(nullptr), size(0) {}
 SingleLinkedList::~SingleLinkedList() { clear(); }
 int SingleLinkedList::prepend(int value) { return insert(0, value); }
 int SingleLinkedList::append(int value) { return insert(size, value); }
 bool SingleLinkedList::is_empty() const { return size == 0; }
 
 SingleLinkedList::SingleLinkedList(const SingleLinkedList &other)
-    : head(other.head), size(other.size) {}
+    : head(other.head), tail(other.tail), size(other.size) {}
 
 SingleLinkedList &SingleLinkedList::operator=(const SingleLinkedList &other) {
   head = other.head;
+  tail = other.tail;
   size = other.size;
   return *this;
 }
@@ -128,12 +129,23 @@ int SingleLinkedList::insert(int index, int value) {
   if (index == 0) {
     new_node->next = head;
     head = new_node;
+    if (tail == nullptr) {
+      tail = new_node;
+    }
+    size += 1;
+    return index;
+  }
+
+  if (index == size) {
+    tail->next = new_node;
+    tail = new_node;
     size += 1;
     return index;
   }
 
   Node *prev = nullptr;
   Node *curr = head;
+
   for (int i = 0; i < index; i++) {
     prev = curr;
     curr = curr->next;

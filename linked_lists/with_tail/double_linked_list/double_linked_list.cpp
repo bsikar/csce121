@@ -1,22 +1,24 @@
-#include "single_linked_list.h"
+#include "double_linked_list.h"
 #include <iostream>
 
-SingleLinkedList::SingleLinkedList() : head(nullptr), size(0) {}
-SingleLinkedList::~SingleLinkedList() { clear(); }
-int SingleLinkedList::prepend(int value) { return insert(0, value); }
-int SingleLinkedList::append(int value) { return insert(size, value); }
-bool SingleLinkedList::is_empty() const { return size == 0; }
+DoubleLinkedList::DoubleLinkedList() : head(nullptr), tail(nullptr), size(0) {}
+DoubleLinkedList::~DoubleLinkedList() { clear(); }
 
-SingleLinkedList::SingleLinkedList(const SingleLinkedList &other)
-    : head(other.head), size(other.size) {}
+DoubleLinkedList::DoubleLinkedList(const DoubleLinkedList &other)
+    : head(other.head), tail(other.tail), size(other.size) {}
 
-SingleLinkedList &SingleLinkedList::operator=(const SingleLinkedList &other) {
+DoubleLinkedList &DoubleLinkedList::operator=(const DoubleLinkedList &other) {
   head = other.head;
+  tail = other.tail;
   size = other.size;
   return *this;
 }
 
-int SingleLinkedList::get(int index) const {
+int DoubleLinkedList::prepend(int value) { return insert(0, value); }
+int DoubleLinkedList::append(int value) { return insert(size, value); }
+bool DoubleLinkedList::is_empty() const { return size == 0; }
+
+int DoubleLinkedList::get(int index) const {
   Node *node = head;
   for (int i = 0; node != nullptr; i++) {
     if (i == index) {
@@ -27,7 +29,7 @@ int SingleLinkedList::get(int index) const {
   throw std::runtime_error("Invalid index");
 }
 
-int SingleLinkedList::set(int index, int value) {
+int DoubleLinkedList::set(int index, int value) {
   Node *node = head;
   for (int i = 0; node != nullptr; i++) {
     if (i == index) {
@@ -40,9 +42,9 @@ int SingleLinkedList::set(int index, int value) {
   throw std::runtime_error("Invalid index");
 }
 
-int SingleLinkedList::length() const { return size; }
+int DoubleLinkedList::length() const { return size; }
 
-std::string SingleLinkedList::print() const {
+std::string DoubleLinkedList::print() const {
   std::string output;
   Node *node = head;
   while (node != nullptr) {
@@ -53,7 +55,7 @@ std::string SingleLinkedList::print() const {
   return output;
 }
 
-void SingleLinkedList::clear() {
+void DoubleLinkedList::clear() {
   Node *curr = head;
   while (curr != nullptr) {
     Node *next = curr->next;
@@ -63,7 +65,7 @@ void SingleLinkedList::clear() {
   head = nullptr;
 }
 
-int SingleLinkedList::find(int value) const {
+int DoubleLinkedList::find(int value) const {
   Node *node = head;
   for (int i = 0; node != nullptr; i++) {
     if (head->data == value) {
@@ -74,7 +76,7 @@ int SingleLinkedList::find(int value) const {
   return -1;
 }
 
-int SingleLinkedList::remove(int value) {
+int DoubleLinkedList::remove(int value) {
   Node *node = head;
   for (int i = 0; node != nullptr; i++) {
     if (node->data == value) {
@@ -85,49 +87,66 @@ int SingleLinkedList::remove(int value) {
   return -1;
 }
 
-int SingleLinkedList::remove_at(int index) {
-  Node *prev = head;
-  Node *curr = head->next;
-  for (int i = 0; curr != nullptr; i++) {
+int DoubleLinkedList::remove_at(int index) {
+  Node *node = head;
+  for (int i = 0; node != nullptr; i++) {
     if (i == index) {
-      prev->next = curr->next;
-      int value = curr->data;
-      delete curr;
-      curr = nullptr;
-      size -= 1;
+      int value = node->data;
+      if (node == head) {
+        head = node->next;
+        if (head != nullptr) {
+          head->prev = nullptr;
+        }
+      } else {
+        node->prev->next = node->next;
+        if (node->next != nullptr) {
+          node->next->prev = node->prev;
+        }
+      }
+      delete node;
       return value;
     }
-    prev = curr;
-    curr = curr->next;
+    node = node->next;
   }
   throw std::runtime_error("Invalid index");
 }
 
-void SingleLinkedList::reverse() {
-  Node *prev = nullptr;
-  Node *curr = head;
-  Node *next = nullptr;
+void DoubleLinkedList::reverse() {
+  Node *temp = nullptr;
+  Node *node = head;
 
-  while (curr != nullptr) {
-    next = curr->next;
-    curr->next = prev;
-    prev = curr;
-    curr = next;
+  while (node != nullptr) {
+    temp = node->prev;
+    node->prev = node->next;
+    node->next = temp;
+    node = node->prev;
   }
 
-  head = prev;
+  if (temp != nullptr) {
+    head = temp->prev;
+  }
 }
 
-int SingleLinkedList::insert(int index, int value) {
+int DoubleLinkedList::insert(int index, int value) {
   if (index < 0 || index > size) {
     return -1;
   }
 
   Node *new_node = new Node(value);
-
   if (index == 0) {
     new_node->next = head;
     head = new_node;
+    if (tail == nullptr) {
+      tail = new_node;
+    }
+    size += 1;
+    return index;
+  }
+
+  if (index == size) {
+    tail->next = new_node;
+    new_node->prev = tail;
+    tail = new_node;
     size += 1;
     return index;
   }
@@ -139,12 +158,14 @@ int SingleLinkedList::insert(int index, int value) {
     curr = curr->next;
   }
   prev->next = new_node;
+  new_node->prev = prev;
   new_node->next = curr;
+  curr->prev = new_node;
   size += 1;
   return index;
 }
 
-void SingleLinkedList::sort() {
+void DoubleLinkedList::sort() {
   Node *curr = head;
   Node *next = nullptr;
 
@@ -162,7 +183,7 @@ void SingleLinkedList::sort() {
   }
 }
 
-std::ostream &operator<<(std::ostream &os, const SingleLinkedList &list) {
+std::ostream &operator<<(std::ostream &os, const DoubleLinkedList &list) {
   os << list.print();
   return os;
 }

@@ -1,5 +1,5 @@
-#include "no_tail/double_linked_list/double_linked_list.h"
-#include "no_tail/single_linked_list/single_linked_list.h"
+#include "with_tail/double_linked_list/double_linked_list.h"
+#include "with_tail/single_linked_list/single_linked_list.h"
 #include <iostream>
 
 int main() {
